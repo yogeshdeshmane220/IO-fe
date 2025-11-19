@@ -1,5 +1,5 @@
 import { useState, useEffect } from "react";
-
+import { API_URL } from "../config";
 export default function WebhooksPage() {
   const [hooks, setHooks] = useState([]);
   const [url, setUrl] = useState("");
@@ -14,7 +14,7 @@ export default function WebhooksPage() {
     setLoading(true);
     setError("");
     try {
-      const r = await fetch("http://localhost:8000/webhooks");
+      const r = await fetch(`${API_URL}/webhooks`);
       if (!r.ok) {
         let msg = `Failed to load (${r.status})`;
         try {
@@ -39,7 +39,7 @@ export default function WebhooksPage() {
     setCreating(true);
     setOpError("");
     try {
-      const r = await fetch("http://localhost:8000/webhooks", {
+      const r = await fetch(`${API_URL}/webhooks`, {
         method: "POST",
         headers: { "content-type": "application/json" },
         body: JSON.stringify({ url, enabled }),
@@ -64,7 +64,7 @@ export default function WebhooksPage() {
     setProcessingId(id);
     setOpError("");
     try {
-      const r = await fetch(`http://localhost:8000/webhooks/${id}`, { method: "DELETE" });
+      const r = await fetch(`${API_URL}/webhooks/${id}`, { method: "DELETE" });
       if (!r.ok) {
         let msg = `Delete failed (${r.status})`;
         try { const text = await r.text(); if (text) msg = text; } catch(e){}
@@ -83,7 +83,7 @@ export default function WebhooksPage() {
     setProcessingId(id);
     setOpError("");
     try {
-      const r = await fetch(`http://localhost:8000/webhooks/${id}`, {
+      const r = await fetch(`${API_URL}/webhooks/${id}`, {
         method: "PATCH",
         headers: { "content-type": "application/json" },
         body: JSON.stringify({ enabled: !current }),
@@ -106,7 +106,7 @@ export default function WebhooksPage() {
     setProcessingId(id);
     setOpError("");
     try {
-      const r = await fetch(`http://localhost:8000/webhooks/${id}/test`, { method: "POST" });
+      const r = await fetch(`${API_URL}/webhooks/${id}/test`, { method: "POST" });
       if (!r.ok) {
         let msg = `Test failed (${r.status})`;
         try { const text = await r.text(); if (text) msg = text; } catch(e){}

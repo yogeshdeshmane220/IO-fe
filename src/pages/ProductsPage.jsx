@@ -1,5 +1,5 @@
 import { useEffect, useState } from "react";
-
+import { API_URL } from "../config";
 export default function ProductsPage() {
   const [products, setProducts] = useState([]);
   const [loading, setLoading] = useState(true);
@@ -13,7 +13,7 @@ export default function ProductsPage() {
     setLoading(true);
     setError("");
     try {
-      const res = await fetch("http://localhost:8000/products");
+      const res = await fetch(`${API_URL}/products`);
       if (!res.ok) {
         let msg = `Failed to load products (${res.status})`;
         try {

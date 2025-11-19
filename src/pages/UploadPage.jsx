@@ -1,5 +1,5 @@
 import { useState, useRef, useEffect } from "react";
-
+import { API_URL } from "../config";
 export default function UploadPage() {
   const [file, setFile] = useState(null);
   const [jobId, setJobId] = useState(null);
@@ -25,7 +25,7 @@ export default function UploadPage() {
       const form = new FormData();
       form.append("file", file);
 
-      const res = await fetch("http://localhost:8000/upload/", {
+      const res = await fetch(`${API_URL}/upload/`, {
         method: "POST",
         body: form,
       });
@@ -63,7 +63,7 @@ export default function UploadPage() {
     if (pollingRef.current) clearInterval(pollingRef.current);
     pollingRef.current = setInterval(async () => {
       try {
-        const r = await fetch(`http://localhost:8000/upload/${id}`);
+        const r = await fetch(`${API_URL}/upload/${id}`);
         if (!r.ok) {
           clearInterval(pollingRef.current);
           setStatus("failed");

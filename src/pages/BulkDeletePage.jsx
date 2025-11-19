@@ -1,5 +1,5 @@
 import { useState } from "react";
-
+import { API_URL } from "../config";
 export default function BulkDeletePage() {
   const [status, setStatus] = useState("idle"); // idle | processing | done | failed
   const [error, setError] = useState("");
@@ -9,7 +9,7 @@ export default function BulkDeletePage() {
     setError("");
 
     try {
-      const r = await fetch("http://localhost:8000/products/clear_all", {
+      const r = await fetch(`${API_URL}/products/clear_all`, {
         method: "DELETE",
       });
 
